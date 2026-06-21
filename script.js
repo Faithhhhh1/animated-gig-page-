@@ -5,7 +5,6 @@ function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-
 resize();
 window.addEventListener("resize", resize);
 
@@ -27,16 +26,17 @@ function draw() {
 
   const h = heart(t);
 
-  // Smaller scale for phones
-  const scale = 8;
+  // Much smaller for phones
+  const scale = Math.min(canvas.width, canvas.height) / 80;
 
   const x = canvas.width / 2 + h.x * scale;
   const y = canvas.height / 2 - h.y * scale;
 
-  ctx.fillStyle = "#ea80b0";
-  ctx.font = "24px Arial";
+  ctx.font = "18px Arial";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+
+  ctx.fillStyle = "#ea80b0";
   ctx.shadowBlur = 20;
   ctx.shadowColor = "#ea80b0";
 
