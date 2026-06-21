@@ -1,51 +1,39 @@
-const heart = document.getElementById("heart");
+const svg = document.querySelector(".heart");
 
-const total = 400;
+// Number of text layers
+const layers = 30;
 
-for (let i = 0; i < total; i++) {
-  const span = document.createElement("span");
-  span.className = "word";
-  span.innerText = "i love you";
+for (let i = 0; i < layers; i++) {
+  // Create <text>
+  const text = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
 
-  const t = (Math.PI * 2 * i) / total;
+  text.setAttribute("class", "love horizontal");
 
-  // Heart equation
-  const x =
-    16 * Math.pow(Math.sin(t), 3);
+  // Used by CSS animation-delay
+  text.style.setProperty("--i", i);
 
-  const y =
-    13 * Math.cos(t) -
-    5 * Math.cos(2 * t) -
-    2 * Math.cos(3 * t) -
-    Math.cos(4 * t);
+  // Create <textPath>
+  const textPath = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "textPath"
+  );
 
-  const scale = 12;
+  // Attach text to the heart path
+  textPath.setAttribute("href", "#heartPath");
 
-  const px = x * scale;
-  const py = -y * scale;
+  // Slightly offset each line
+  textPath.setAttribute(
+    "startOffset",
+    `${i * 0.35}%`
+  );
 
-  span.style.left = `${250 + px}px`;
-  span.style.top = `${250 + py}px`;
+  // Repeat text around the heart
+  textPath.textContent =
+    " I love you  I love you  I love you  I love you  I love you  I love you ";
 
-  // Rotate text along curve
-  const angle = Math.atan2(py, px);
-  span.style.transform =
-    `translate(-50%, -50%)
-     rotate(${angle}rad)`;
-
-  heart.appendChild(span);
+  text.appendChild(textPath);
+  svg.appendChild(text);
 }
-
-// Slow rotation
-let rot = 0;
-
-function animate() {
-  rot += 0.1;
-
-  heart.style.transform =
-    `rotate(${rot}deg)`;
-
-  requestAnimationFrame(animate);
-}
-
-animate();
