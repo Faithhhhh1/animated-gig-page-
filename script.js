@@ -9,15 +9,6 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-const trails = [];
-
-for (let i = 0; i < 25; i++) {
-  trails.push({
-    t: i * 0.1,
-    speed: 0.01
-  });
-}
-
 function heart(t) {
   return {
     x: 16 * Math.pow(Math.sin(t), 3),
@@ -29,31 +20,48 @@ function heart(t) {
   };
 }
 
+const particles = [];
+const COUNT = 60;
+
+for (let i = 0; i < COUNT; i++) {
+  particles.push({
+    t: (Math.PI * 2 * i) / COUNT,
+    speed: 0.01
+  });
+}
+
 function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  // Creates a fading trail
+  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const scale = Math.min(canvas.width, canvas.height) / 40;
+  const scale = Math.min(canvas.width, canvas.height) / 45;
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
 
-  ctx.font = "14px Arial";
-  ctx.textAlign = "center";
-
-  trails.forEach((p, i) => {
+  particles.forEach((p) => {
     const h = heart(p.t);
 
     const x = cx + h.x * scale;
     const y = cy - h.y * scale;
 
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = "#ea80b0";
+    ctx.save();
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
     ctx.fillStyle = "#ea80b0";
+    ctx.shadowBlur = 25;
+    ctx.shadowColor = "#ea80b0";
+
     ctx.fillText("I love you", x, y);
+
+    ctx.restore();
 
     p.t += p.speed;
 
-    if (p.t > Math.PI * 2) {
+    if (p.t >= Math.PI * 2) {
       p.t = 0;
     }
   });
