@@ -11,58 +11,39 @@ function heart(t) {
   };
 }
 
-const layers = 7;
-const count = 90;
 const words = [];
+const COUNT = 400;
 
-for (let l = 0; l < layers; l++) {
-  const row = [];
-
-  for (let i = 0; i < count; i++) {
-    const div = document.createElement("div");
-    div.className = "love_word";
-    div.textContent = "I love you";
-
-    ui.appendChild(div);
-    row.push(div);
-  }
-
-  words.push(row);
+for (let i = 0; i < COUNT; i++) {
+  const span = document.createElement("span");
+  span.className = "love";
+  span.textContent = "I love you";
+  ui.appendChild(span);
+  words.push(span);
 }
 
-let time = 0;
+let offset = 0;
 
 function animate() {
+  const scale =
+    Math.min(window.innerWidth, window.innerHeight) / 45;
+
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
-  const scale = Math.min(window.innerWidth, window.innerHeight) / 45;
 
-  for (let l = 0; l < layers; l++) {
-    for (let i = 0; i < count; i++) {
-      const t =
-        (i / count) * Math.PI * 2 +
-        time +
-        l * 0.12;
+  words.forEach((el, i) => {
+    const t = (i / COUNT) * Math.PI * 2 + offset;
 
-      const p = heart(t);
+    const p = heart(t);
 
-      const x =
-        cx +
-        p.x * scale +
-        l * 12;
+    const x = cx + p.x * scale;
+    const y = cy - p.y * scale;
 
-      const y =
-        cy -
-        p.y * scale;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+  });
 
-      const el = words[l][i];
-
-      el.style.left = x + "px";
-      el.style.top = y + "px";
-    }
-  }
-
-  time += 0.02;
+  offset += 0.01;
   requestAnimationFrame(animate);
 }
 
