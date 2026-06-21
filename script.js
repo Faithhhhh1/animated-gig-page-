@@ -1,5 +1,16 @@
 const canvas = document.getElementById("canvas");
+
+if (!canvas) {
+  alert("Canvas not found!");
+  throw new Error("Canvas not found");
+}
+
 const ctx = canvas.getContext("2d");
+
+if (!ctx) {
+  alert("Canvas context not supported!");
+  throw new Error("Canvas context not supported");
+}
 
 function resize() {
   canvas.width = window.innerWidth;
@@ -21,18 +32,17 @@ function heart(t) {
 }
 
 const particles = [];
-const COUNT = 60;
+const COUNT = 80;
 
 for (let i = 0; i < COUNT; i++) {
   particles.push({
     t: (Math.PI * 2 * i) / COUNT,
-    speed: 0.01
+    speed: 0.015
   });
 }
 
 function draw() {
-  // Creates a fading trail
-  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   const scale = Math.min(canvas.width, canvas.height) / 45;
@@ -47,12 +57,12 @@ function draw() {
 
     ctx.save();
 
-    ctx.font = "12px Arial";
+    ctx.font = "14px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillStyle = "#ea80b0";
-    ctx.shadowBlur = 25;
+    ctx.shadowBlur = 20;
     ctx.shadowColor = "#ea80b0";
 
     ctx.fillText("I love you", x, y);
@@ -62,7 +72,7 @@ function draw() {
     p.t += p.speed;
 
     if (p.t >= Math.PI * 2) {
-      p.t = 0;
+      p.t -= Math.PI * 2;
     }
   });
 
