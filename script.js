@@ -1,12 +1,4 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+const ui = document.getElementById("ui");
 
 function heart(t) {
   return {
@@ -19,58 +11,59 @@ function heart(t) {
   };
 }
 
+const layers = 7;
+const count = 90;
+const words = [];
+
+for (let l = 0; l < layers; l++) {
+  const row = [];
+
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement("div");
+    div.className = "love_word";
+    div.textContent = "I love you";
+
+    ui.appendChild(div);
+    row.push(div);
+  }
+
+  words.push(row);
+}
+
 let time = 0;
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function animate() {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const scale = Math.min(window.innerWidth, window.innerHeight) / 45;
 
-  const scale =
-    Math.min(canvas.width, canvas.height) / 60;
-
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#ea80b0";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-
-  // only a few layers
-  for (let line = 0; line < 6; line++) {
-    for (let i = 0; i < 55; i++) {
+  for (let l = 0; l < layers; l++) {
+    for (let i = 0; i < count; i++) {
       const t =
-        (i / 55) * Math.PI * 2 +
+        (i / count) * Math.PI * 2 +
         time +
-        line * 0.12;
+        l * 0.12;
 
       const p = heart(t);
 
       const x =
         cx +
         p.x * scale +
-        line * 5;
+        l * 12;
 
       const y =
         cy -
-        p.y * scale +
-        line * 5;
+        p.y * scale;
 
-      ctx.save();
+      const el = words[l][i];
 
-      ctx.translate(x, y);
-      ctx.rotate(-Math.PI / 6);
-
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = "#ea80b0";
-
-      ctx.fillText("I love you", 0, 0);
-
-      ctx.restore();
+      el.style.left = x + "px";
+      el.style.top = y + "px";
     }
   }
 
-  time += 0.015;
-  requestAnimationFrame(draw);
+  time += 0.02;
+  requestAnimationFrame(animate);
 }
 
-draw();
+animate();
