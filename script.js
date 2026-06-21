@@ -2,11 +2,11 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 function resize() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 resize();
-addEventListener("resize", resize);
+window.addEventListener("resize", resize);
 
 function heart(t) {
   return {
@@ -19,55 +19,36 @@ function heart(t) {
   };
 }
 
-let rot = 0;
+let t = 0;
 
-function drawHeart(angleOffset) {
-  const scale = Math.min(canvas.width, canvas.height) / 55;
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-
-  ctx.beginPath();
-
-  for (let t = 0; t <= Math.PI * 2; t += 0.02) {
-    const p = heart(t);
-
-    let x = p.x * scale;
-    let y = -p.y * scale;
-
-    // fake 3D rotation
-    const z = Math.sin(angleOffset) * 180;
-
-    x += z;
-
-    const px = cx + x;
-    const py = cy + y;
-
-    if (t === 0) {
-      ctx.moveTo(px, py);
-    } else {
-      ctx.lineTo(px, py);
-    }
-  }
-
-  ctx.strokeStyle = "#ff9acb";
-  ctx.lineWidth = 3;
-  ctx.shadowBlur = 18;
-  ctx.shadowColor = "#ff9acb";
-  ctx.stroke();
-}
-
-function animate() {
+function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // draw many copies
-  for (let i = 0; i < 40; i++) {
-    const a = rot + i * 0.15;
-    drawHeart(a);
+  const h = heart(t);
+
+  // Much smaller for phones
+  const scale = Math.min(canvas.width, canvas.height) / 80;
+
+  const x = canvas.width / 2 + h.x * scale;
+  const y = canvas.height / 2 - h.y * scale;
+
+  ctx.font = "18px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  ctx.fillStyle = "#ea80b0";
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = "#ea80b0";
+
+  ctx.fillText("I love you", x, y);
+
+  t += 0.03;
+
+  if (t > Math.PI * 2) {
+    t = 0;
   }
 
-  rot += 0.03;
-
-  requestAnimationFrame(animate);
+  requestAnimationFrame(draw);
 }
 
-animate();
+draw();
