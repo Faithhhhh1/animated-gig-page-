@@ -1,14 +1,12 @@
-1const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 }
 resize();
-window.addEventListener("resize", resize);
-
-let rotation = 0;
+addEventListener("resize", resize);
 
 function heart(t) {
   return {
@@ -21,30 +19,28 @@ function heart(t) {
   };
 }
 
-function drawHeart(offset, angle) {
-  const scale = Math.min(canvas.width, canvas.height) / 45;
+let rot = 0;
+
+function drawHeart(angleOffset) {
+  const scale = Math.min(canvas.width, canvas.height) / 55;
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
 
   ctx.beginPath();
 
   for (let t = 0; t <= Math.PI * 2; t += 0.02) {
-    const h = heart(t);
+    const p = heart(t);
 
-    let x = h.x * scale;
-    let y = -h.y * scale;
+    let x = p.x * scale;
+    let y = -p.y * scale;
 
-    // rotate
-    const rx =
-      x * Math.cos(angle) -
-      y * Math.sin(angle);
+    // fake 3D rotation
+    const z = Math.sin(angleOffset) * 180;
 
-    const ry =
-      x * Math.sin(angle) +
-      y * Math.cos(angle);
+    x += z;
 
-    const px = cx + rx + offset;
-    const py = cy + ry;
+    const px = cx + x;
+    const py = cy + y;
 
     if (t === 0) {
       ctx.moveTo(px, py);
@@ -53,11 +49,9 @@ function drawHeart(offset, angle) {
     }
   }
 
-  ctx.closePath();
-
-  ctx.lineWidth = 4;
   ctx.strokeStyle = "#ff9acb";
-  ctx.shadowBlur = 20;
+  ctx.lineWidth = 3;
+  ctx.shadowBlur = 18;
   ctx.shadowColor = "#ff9acb";
   ctx.stroke();
 }
@@ -65,12 +59,13 @@ function drawHeart(offset, angle) {
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // draw many hearts
-  for (let i = -25; i <= 25; i++) {
-    drawHeart(i * 4, rotation);
+  // draw many copies
+  for (let i = 0; i < 40; i++) {
+    const a = rot + i * 0.15;
+    drawHeart(a);
   }
 
-  rotation += 0.01;
+  rot += 0.03;
 
   requestAnimationFrame(animate);
 }
