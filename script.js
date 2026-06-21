@@ -12,7 +12,7 @@ function heart(t) {
 }
 
 const words = [];
-const COUNT = 240;
+const COUNT = 120;
 
 for (let i = 0; i < COUNT; i++) {
   const span = document.createElement("span");
@@ -36,17 +36,17 @@ function animate() {
 
     const p = heart(t);
 
-    const layer = Math.floor(i / 80);
+    const layer = Math.floor(i / 30);
 
 const x =
   cx +
   p.x * scale +
-  layer * 12;
+  layer * 18;
 
 const y =
   cy -
   p.y * scale +
-  layer * 12;
+  layer * 18;
 
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
