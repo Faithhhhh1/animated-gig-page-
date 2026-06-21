@@ -23,25 +23,30 @@ function heart(t) {
 let t = 0;
 
 function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   const h = heart(t);
 
-  const scale = Math.min(canvas.width, canvas.height) / 40;
+  // Smaller scale for phones
+  const scale = 8;
 
   const x = canvas.width / 2 + h.x * scale;
   const y = canvas.height / 2 - h.y * scale;
 
   ctx.fillStyle = "#ea80b0";
+  ctx.font = "24px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
   ctx.shadowBlur = 20;
   ctx.shadowColor = "#ea80b0";
-  ctx.font = "18px Arial";
-  ctx.textAlign = "center";
 
   ctx.fillText("I love you", x, y);
 
   t += 0.03;
+
+  if (t > Math.PI * 2) {
+    t = 0;
+  }
 
   requestAnimationFrame(draw);
 }
