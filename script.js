@@ -36,12 +36,12 @@ function animate() {
 
     const p = heart(t);
 
-    const layer = Math.floor(i / 30);
+    const layer = Math.floor(i / 20);
 
 const x =
   cx +
   p.x * scale +
-  layer * 18;
+  layer * 15;
 
 const y =
   cy -
