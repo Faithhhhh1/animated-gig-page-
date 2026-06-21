@@ -5,21 +5,10 @@
 }
 
 body {
-  background: black;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #000;
+  overflow: hidden;
 }
 
-.heart {
-  width: 500px;
-  height: 500px;
-  overflow: visible;
-}
-
-.love {
-  fill: #ea80b0;
-  font-size: 20px;
-  font-family: Arial, sans-serif;
+canvas {
+  display: block;
 }
