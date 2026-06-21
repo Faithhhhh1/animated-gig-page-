@@ -46,7 +46,7 @@ const x =
 const y =
   cy -
   p.y * scale +
-  layer * 18;
+  layer * 15;
 
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
