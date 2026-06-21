@@ -1,76 +1,25 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Page */
 body {
-  width: 100%;
+  background: black;
   height: 100vh;
-  background: #000;
-  overflow: hidden;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* SVG Container */
 .heart {
-  width: min(90vw, 550px);
+  width: 500px;
+  height: 500px;
   overflow: visible;
 }
 
-/* Repeated text */
 .love {
   fill: #ea80b0;
+  font-size: 20px;
   font-family: Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 1px;
-
-  filter:
-    drop-shadow(0 0 3px #fff)
-    drop-shadow(0 0 8px #ea80b0)
-    drop-shadow(0 0 18px #ea80b0)
-    drop-shadow(0 0 35px #ea80b0);
-}
-
-/* Horizontal movement */
-.horizontal {
-  animation: horizontal 8s infinite alternate ease-in-out;
-  animation-delay: calc(var(--i) * -180ms);
-}
-
-/* Animation */
-@keyframes horizontal {
-  from {
-    transform: translateX(-25px);
-  }
-  to {
-    transform: translateX(25px);
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .heart {
-    width: 95vw;
-  }
-
-  .love {
-    font-size: 14px;
-    letter-spacing: 0.5px;
-  }
-
-  @keyframes horizontal {
-    from {
-      transform: translateX(-15px);
-    }
-    to {
-      transform: translateX(15px);
-    }
-  }
 }
