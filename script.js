@@ -8,6 +8,7 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
+// Heart equation
 function heart(t) {
   return {
     x: 16 * Math.pow(Math.sin(t), 3),
@@ -19,34 +20,64 @@ function heart(t) {
   };
 }
 
-let t = 0;
+// Create lots of glowing texts
+const particles = [];
+const COUNT = 80;
+
+for (let i = 0; i < COUNT; i++) {
+  particles.push({
+    t: (Math.PI * 2 * i) / COUNT
+  });
+}
 
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Creates the fading trail
+  ctx.fillStyle = "rgba(0,0,0,0.06)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const h = heart(t);
+  const scale = Math.min(canvas.width, canvas.height) / 45;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
 
-  // Much smaller for phones
-  const scale = Math.min(canvas.width, canvas.height) / 80;
+  particles.forEach((p, i) => {
+    const h = heart(p.t);
 
-  const x = canvas.width / 2 + h.x * scale;
-  const y = canvas.height / 2 - h.y * scale;
+    const x = cx + h.x * scale;
+    const y = cy - h.y * scale;
 
-  ctx.font = "18px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+    ctx.save();
 
-  ctx.fillStyle = "#ea80b0";
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "#ea80b0";
+    // Rotate text along the curve
+    const h2 = heart(p.t + 0.02);
+    const x2 = cx + h2.x * scale;
+    const y2 = cy - h2.y * scale;
 
-  ctx.fillText("I love you", x, y);
+    const angle = Math.atan2(y2 - y, x2 - x);
 
-  t += 0.03;
+    ctx.translate(x, y);
+    ctx.rotate(angle);
 
-  if (t > Math.PI * 2) {
-    t = 0;
-  }
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillStyle = "#ff8fc7";
+    ctx.shadowBlur = 25;
+    ctx.shadowColor = "#ff8fc7";
+
+    ctx.fillText("I love you", 0, 0);
+
+    ctx.restore();
+  });
+
+  // Move everything together around the heart
+  particles.forEach((p) => {
+    p.t += 0.02;
+
+    if (p.t > Math.PI * 2) {
+      p.t -= Math.PI * 2;
+    }
+  });
 
   requestAnimationFrame(draw);
 }
