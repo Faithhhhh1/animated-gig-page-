@@ -1,254 +1,43 @@
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --bg: #000;
-  --text: #fff;
-  --muted: #b5b5b5;
-  --primary: #ea80b0;
-}
-
 body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-}
-
-/* =======================
-   Navigation
-======================= */
-
-.nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 30px 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
-
-.logo {
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.nav nav {
-  display: flex;
-  gap: 40px;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #cfcfcf;
-  font-size: 0.95rem;
-  transition: 0.3s;
-}
-
-.nav a:hover {
-  color: var(--primary);
-}
-
-/* =======================
-   Hero Section
-======================= */
-
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 80px;
-  padding: 120px 80px;
-}
-
-/* =======================
-   Animated Heart
-======================= */
-
-.heart-wrapper {
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.heart-svg {
-  width: 100%;
-  max-width: 520px;
-}
-
-.heart-text {
-  fill: var(--primary);
-  font-size: 20px;
-  letter-spacing: 3px;
-  font-weight: 600;
-  text-transform: uppercase;
-  filter: drop-shadow(0 0 10px rgba(234, 128, 176, 0.8))
-          drop-shadow(0 0 30px rgba(234, 128, 176, 0.5));
-}
-
-/* =======================
-   Content
-======================= */
-
-.content {
-  max-width: 550px;
-}
-
-.tag {
-  display: inline-block;
-  color: var(--primary);
-  font-size: 0.85rem;
-  letter-spacing: 3px;
-  margin-bottom: 25px;
-}
-
-.content h1 {
-  font-size: 4.3rem;
-  line-height: 1;
-  margin-bottom: 25px;
-  font-weight: 700;
-}
-
-.content h1 span {
-  color: var(--primary);
-}
-
-.content p {
-  color: var(--muted);
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 40px;
-}
-
-/* =======================
-   Buttons
-======================= */
-
-.buttons {
-  display: flex;
-  gap: 20px;
-}
-
-.btn {
-  text-decoration: none;
-  padding: 16px 34px;
-  border-radius: 50px;
-  background: var(--primary);
-  color: #fff;
-  font-weight: 600;
-  transition: 0.35s;
-}
-
-.btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(234, 128, 176, 0.35);
-}
-
-.outline {
-  background: transparent;
-  border: 1px solid var(--primary);
-}
-
-.outline:hover {
-  background: var(--primary);
-}
-
-/* =======================
-   Background Glow
-======================= */
-
-body::before {
-  content: "";
-  position: fixed;
+.heart {
+  position: relative;
   width: 500px;
   height: 500px;
-  background: rgba(234, 128, 176, 0.15);
-  border-radius: 50%;
-  filter: blur(180px);
-  top: -100px;
-  left: -100px;
-  z-index: -1;
+  animation: float 6s ease-in-out infinite;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  background: rgba(234, 128, 176, 0.12);
-  border-radius: 50%;
-  filter: blur(180px);
-  bottom: -100px;
-  right: -100px;
-  z-index: -1;
+.word {
+  position: absolute;
+  color: #ea80b0;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  text-shadow:
+    0 0 5px #ea80b0,
+    0 0 10px #ea80b0,
+    0 0 20px #ea80b0;
+  transform-origin: center;
 }
 
-/* =======================
-   Responsive
-======================= */
-
-@media (max-width: 992px) {
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 50px;
+@keyframes float {
+  0%,100% {
+    transform: translateY(0px);
   }
-
-  .content {
-    margin: auto;
-  }
-
-  .buttons {
-    justify-content: center;
-  }
-
-  .content h1 {
-    font-size: 3rem;
-  }
-
-  .nav {
-    padding: 25px 30px;
-  }
-
-  .nav nav {
-    gap: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .hero {
-    padding: 120px 30px 80px;
-  }
-
-  .content h1 {
-    font-size: 2.3rem;
-  }
-
-  .content p {
-    font-size: 1rem;
-  }
-
-  .heart-svg {
-    max-width: 350px;
-  }
-
-  .buttons {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
+  50% {
+    transform: translateY(-15px);
   }
 }
